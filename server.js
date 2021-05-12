@@ -6,7 +6,7 @@ const mongodb = require("mongodb");
 const { connect } = require("http2");
 const jwt = require("jsonwebtoken");
 
-const URL = "mongodb+srv://Benhur:Benhur93@cluster0.zthp1.mongodb.net?retryWrites=true&w=majority";
+const URL = "mongodb+srv://Benhur:user123@cluster0.l4pqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const DB = "url";
 
 app.use(cors());
