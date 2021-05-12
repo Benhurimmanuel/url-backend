@@ -6,8 +6,7 @@ const mongodb = require("mongodb");
 const { connect } = require("http2");
 const jwt = require("jsonwebtoken");
 
-const URL =
-  "mongodb+srv://Benhur:user123@cluster0.l4pqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const URL = "mongodb+srv://Benhur:user123@cluster0.l4pqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const DB = "url";
 
 app.use(cors());
@@ -52,10 +51,15 @@ app.get("/register", async function (req, res) {
     // select db
     let db = connection.db(DB);
     // checking if email is already present
-    let isEmailUnique = await db
-      .collection("register")
-      .findOne({ userEmail: req.body.userEmail });
-  } catch (error) {
+    if(db){
+      res.json({
+        message:"in"
+      })}
+      else{
+        res.json({
+          message:"out"  
+      })   
+  } }catch (error) {
     console.log(error);
   }
 });
