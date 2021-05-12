@@ -5,8 +5,9 @@ const bcrypt = require("bcrypt");
 const mongodb = require("mongodb");
 const { connect } = require("http2");
 const jwt = require("jsonwebtoken");
+require("dotenv").config
 
-const URL = "mongodb+srv://Benhur:user123@cluster0.l4pqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const URL = process.env.DB;
 const DB = "url";
 
 app.use(cors());
@@ -50,7 +51,7 @@ app.get("/register", async function (req, res) {
     let connection = await mongodb.connect(URL);
     // select db
     let db = connection.db(DB);
-    // checking if email is already present
+    
     if(db){
       res.json({
         message:"in"
@@ -81,7 +82,7 @@ app.post("/login", async function (req, res) {
       );
 
       if (isPasswordCorrect) {
-        let token = jwt.sign({ _id: user._id }, "qwertyuiop");
+        let token = jwt.sign({ _id: user._id },process.env.SECRET);
         res.json({
           message: "allow",
           token,
@@ -106,7 +107,7 @@ app.post("/login", async function (req, res) {
 function authenticate(req, res, next) {
   if (req.headers.authorization) {
     try {
-      let jwtvalid = jwt.verify(req.headers.authorization, "qwertyuiop");
+      let jwtvalid = jwt.verify(req.headers.authorization,process.env.SECRET);
       if (jwtvalid) {
         req.userid = jwtvalid._id;
         next();
