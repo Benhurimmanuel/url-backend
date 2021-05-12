@@ -6,7 +6,8 @@ const mongodb = require("mongodb");
 const { connect } = require("http2");
 const jwt = require("jsonwebtoken");
 
-const URL = "mongodb+srv://Benhur:user123@cluster0.l4pqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const URL =
+  "mongodb+srv://Benhur:user123@cluster0.l4pqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const DB = "url";
 
 app.use(cors());
@@ -40,6 +41,20 @@ app.post("/register", async function (req, res) {
         message: "User Registered",
       });
     }
+  } catch (error) {
+    console.log(error);
+  }
+});
+app.get("/register", async function (req, res) {
+  try {
+    // connect to DB
+    let connection = await mongodb.connect(URL);
+    // select db
+    let db = connection.db(DB);
+    // checking if email is already present
+    let isEmailUnique = await db
+      .collection("register")
+      .findOne({ userEmail: req.body.userEmail });
   } catch (error) {
     console.log(error);
   }
